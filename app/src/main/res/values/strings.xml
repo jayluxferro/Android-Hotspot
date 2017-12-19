@@ -11,4 +11,5 @@
     <string name="prompt_password">Password</string>
     <string name="action_password_short">Short Password</string>
     <string name="update_config">Update Configuration</string>
+    <string name="show_password">Show Password</string>
 </resources>
