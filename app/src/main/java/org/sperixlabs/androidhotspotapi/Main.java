@@ -57,6 +57,18 @@ public class Main extends Fragment {
         }
 
         db = new SQLiteHandler(this.getContext());
+
+        //checking if hotspot is on
+        if(db.getStatus()){
+            Toast.makeText(getContext(), "Hotspot is on", Toast.LENGTH_LONG).show();
+            displayMsg.setText("Hotspot Started!");
+            displayMsg.setTextColor(getResources().getColor(R.color.green));
+        }else{
+            Toast.makeText(getContext(), "Hotspot is off", Toast.LENGTH_LONG).show();
+            displayMsg.setText("Hotspot disabled!");
+            displayMsg.setTextColor(getResources().getColor(R.color.red));
+        }
+
         //getting ssid and password
         Cursor mCursor = db.getConfiguration();
         if(mCursor.getCount() >= 1){
@@ -85,6 +97,7 @@ public class Main extends Fragment {
                     if(hotutil.startHotSpot(true)){
                         displayMsg.setText("Hotspot Started!");
                         displayMsg.setTextColor(getResources().getColor(R.color.green));
+                        db.updateStatus("1");
                     }else{
                         displayMsg.setText("Could not start hotspot");
                         displayMsg.setTextColor(getResources().getColor(R.color.red));
@@ -103,6 +116,7 @@ public class Main extends Fragment {
                 displayMsg.setText("Stopping Hotspot...");
                 if(hotutil.startHotSpot(false)){
                     displayMsg.setText("Hotspot disabled");
+                    db.updateStatus("0");
                 }else{
                     displayMsg.setText("Could not stop hotspot");
                 }

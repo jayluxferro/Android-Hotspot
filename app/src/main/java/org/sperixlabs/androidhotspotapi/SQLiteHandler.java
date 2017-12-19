@@ -7,12 +7,9 @@ package org.sperixlabs.androidhotspotapi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import java.util.HashMap;
 
 public class SQLiteHandler extends SQLiteOpenHelper {
 
@@ -45,7 +42,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + KEY_PASSWORD + " TEXT)";
         db.execSQL(CREATE_CONFIG_TABLE);
         //adding default username and password
-        db.execSQL("insert into configuration(ssid,password) values('Hack-The-Planet','hacktheplanet777')");
+        db.execSQL("insert into configuration(ssid,password) values('HotSpot','1234567')");
 
         db.execSQL("create table current_status(id integer primary key, status integer)");
         //adding default status
@@ -86,5 +83,32 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             updated = true;
         }
         return updated;
+    }
+
+    public boolean getStatus(){
+        boolean on = false;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor mCursor = db.query("current_status", new String[]{"status"},null, null, null, null, null, "1");
+        if(mCursor.getCount() >= 1){
+            mCursor.moveToFirst();
+            if(Integer.valueOf(mCursor.getString(mCursor.getColumnIndex("status"))) == 1){
+                on = true;
+            }
+        }
+        return on;
+    }
+
+    public boolean updateStatus(String status){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from current_status");
+
+        ContentValues values = new ContentValues();
+        values.put("status", status);
+        Long id = db.insert("current_status",null,values);
+        Log.d(TAG,"CurrentStatus updated: " + id);
+        if(id > 0){
+            return true;
+        }
+        return false;
     }
 }

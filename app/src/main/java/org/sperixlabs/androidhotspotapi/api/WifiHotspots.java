@@ -265,6 +265,28 @@ public class WifiHotspots {
 
 
     /**
+     * Get current Access Point status
+     */
+
+    public boolean getHotspotStatus(){
+        Method[] mMethods = mWifiManager.getClass().getDeclaredMethods();
+        for (Method mMethod : mMethods) {
+            if (mMethod.getName().equals("setWifiApEnabled")) {
+                try {
+                   int appState = (Integer) mMethod.invoke(mWifiManager);
+                   if(appState == 13){
+                       return true;
+                   }else {
+                       return false;
+                   }
+                } catch (Exception ex) {
+                }
+                break;
+            }
+        }
+        return false;
+    }
+    /**
      * Method to turn ON/OFF a  Access Point
      *
      * @param enable Put true if you want to start  Access Point
@@ -375,7 +397,7 @@ public class WifiHotspots {
      * shred all  Configured wifi Networks
      */
     public boolean shredAllWifi(){
-        Context context =  mContext;
+        Context context =  mContext.getApplicationContext();
         mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
         if( mWifiInfo != null ){
