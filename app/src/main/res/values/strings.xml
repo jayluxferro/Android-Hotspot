@@ -4,6 +4,11 @@
     <string name="main">Main</string>
     <string name="clients">Clients</string>
     <string name="config">Configuration</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- Strings related to login -->
+    <string name="prompt_ssid">SSID</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_password_short">Short Password</string>
+    <string name="update_config">Update Configuration</string>
 </resources>
