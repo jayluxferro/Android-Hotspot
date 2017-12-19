@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,7 @@ public class Config extends Fragment {
         return loadConfig(inflater,container, savedInstanceState);
     }
 
-    public View loadConfig(final LayoutInflater inflater, final ViewGroup container,
+    private View loadConfig(final LayoutInflater inflater, final ViewGroup container,
                            final Bundle savedInstanceState){
         View configView = inflater.inflate(R.layout.fragment_config, container, false);
         ssid = configView.findViewById(R.id.ssid);

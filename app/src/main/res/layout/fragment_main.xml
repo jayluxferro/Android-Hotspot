@@ -8,5 +8,50 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/fragment_margin">
 
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/config_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/startBtn"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:text="@string/start_hotspot"
+                android:textStyle="bold"
+                android:background="@drawable/bg1"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/stopBtn"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:text="@string/stop_hotspot"
+                android:textStyle="bold"
+                android:background="@drawable/bg2"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/deep_grey"
+                android:textStyle="bold"
+                android:text="@string/status"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:gravity="center"/>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
