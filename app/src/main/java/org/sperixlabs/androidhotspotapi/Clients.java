@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import org.sperixlabs.androidhotspotapi.api.WifiAddresses;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,12 +63,17 @@ public class Clients extends Fragment {
         for (String result : results3) {
             /*Toast.makeText(getContext(),result,
                     Toast.LENGTH_SHORT).show();*/
+            String hostname = "N/A";
+            try {
+                hostname = InetAddress.getByName(result).getHostName();
+            } catch (UnknownHostException e) {
+                // error in getting hostname
+            }
             String macAddr = wAddr.getArpMacAddress(result);
-            clientList.add(new Client("Hostname", result, macAddr));
+            clientList.add(new Client(hostname, result, macAddr));
         }
         clientsAdapter.notifyDataSetChanged();
 
         return clientsView;
     }
-
 }
