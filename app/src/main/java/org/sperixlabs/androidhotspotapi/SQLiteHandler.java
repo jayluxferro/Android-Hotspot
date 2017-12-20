@@ -42,7 +42,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + KEY_PASSWORD + " TEXT)";
         db.execSQL(CREATE_CONFIG_TABLE);
         //adding default username and password
-        db.execSQL("insert into configuration(ssid,password) values('HotSpot','1234567')");
+        db.execSQL("insert into configuration(ssid,password) values('HotSpot','123456789')");
 
         db.execSQL("create table current_status(id integer primary key, status integer)");
         //adding default status

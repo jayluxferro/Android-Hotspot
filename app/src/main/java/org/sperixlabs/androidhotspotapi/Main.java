@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.sperixlabs.androidhotspotapi.api.WifiAddresses;
 import org.sperixlabs.androidhotspotapi.api.WifiHotspots;
 import org.sperixlabs.androidhotspotapi.api.WifiStatus;
 
@@ -20,12 +21,13 @@ import org.sperixlabs.androidhotspotapi.api.WifiStatus;
  */
 public class Main extends Fragment {
     private Button startBtn, stopBtn;
-    private TextView displayMsg;
+    private TextView displayMsg, ssidView, ip, mac;
     private WifiHotspots hotutil;
     private WifiStatus ws;
     private SQLiteHandler db;
     private String ssid = null;
     private String password = null;
+    private WifiAddresses wAddr;
 
     public Main() {
         // Required empty public constructor
@@ -44,6 +46,10 @@ public class Main extends Fragment {
         displayMsg = mainConfig.findViewById(R.id.status);
         startBtn = mainConfig.findViewById(R.id.startBtn);
         stopBtn = mainConfig.findViewById(R.id.stopBtn);
+        wAddr = new WifiAddresses(this.getContext());
+        ssidView = mainConfig.findViewById(R.id.ssid);
+        ip = mainConfig.findViewById(R.id.gateway);
+        mac = mainConfig.findViewById(R.id.mac);
 
         hotutil = new WifiHotspots(this.getContext());
         ws = new WifiStatus(this.getContext());
@@ -58,17 +64,6 @@ public class Main extends Fragment {
 
         db = new SQLiteHandler(this.getContext());
 
-        //checking if hotspot is on
-        if(db.getStatus()){
-            Toast.makeText(getContext(), "Hotspot is on", Toast.LENGTH_LONG).show();
-            displayMsg.setText("Hotspot Started!");
-            displayMsg.setTextColor(getResources().getColor(R.color.green));
-        }else{
-            Toast.makeText(getContext(), "Hotspot is off", Toast.LENGTH_LONG).show();
-            displayMsg.setText("Hotspot disabled!");
-            displayMsg.setTextColor(getResources().getColor(R.color.red));
-        }
-
         //getting ssid and password
         Cursor mCursor = db.getConfiguration();
         if(mCursor.getCount() >= 1){
@@ -81,6 +76,19 @@ public class Main extends Fragment {
             return mainConfig;
         }
 
+        //checking if hotspot is on
+        if(db.getStatus()){
+            Toast.makeText(getContext(), "Hotspot is on", Toast.LENGTH_LONG).show();
+            displayMsg.setText("Hotspot Started!");
+            displayMsg.setTextColor(getResources().getColor(R.color.green));
+            ssidView.setText(ssid);
+            ip.setText(wAddr.getDeviceIPAddress());
+            mac.setText(wAddr.getDeviceMacAddress());
+        }else{
+            Toast.makeText(getContext(), "Hotspot is off", Toast.LENGTH_LONG).show();
+            displayMsg.setText("Hotspot disabled!");
+            displayMsg.setTextColor(getResources().getColor(R.color.red));
+        }
 
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +106,9 @@ public class Main extends Fragment {
                         displayMsg.setText("Hotspot Started!");
                         displayMsg.setTextColor(getResources().getColor(R.color.green));
                         db.updateStatus("1");
+                        ssidView.setText(ssid);
+                        ip.setText(wAddr.getDeviceIPAddress());
+                        mac.setText(wAddr.getGatWayMacAddress());
                     }else{
                         displayMsg.setText("Could not start hotspot");
                         displayMsg.setTextColor(getResources().getColor(R.color.red));
@@ -117,6 +128,9 @@ public class Main extends Fragment {
                 if(hotutil.startHotSpot(false)){
                     displayMsg.setText("Hotspot disabled");
                     db.updateStatus("0");
+                    ssidView.setText("SSID");
+                    ip.setText("IP Address");
+                    mac.setText("MAC Address");
                 }else{
                     displayMsg.setText("Could not stop hotspot");
                 }
