@@ -34,16 +34,23 @@ public class Clients extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        ((MainActivity)getActivity()).setFragmentRefreshListener(new MainActivity.FragmentRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadClients(inflater, container, savedInstanceState);
+            }
+        });
         // Inflate the layout for this fragment
         return loadClients(inflater, container, savedInstanceState);
     }
 
-    private View loadClients(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    private View loadClients(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState){
         View clientsView = inflater.inflate(R.layout.fragment_clients, container, false);
 
         recyclerView = clientsView.findViewById(R.id.recycler_view);
+
 
         wAddr = new WifiAddresses(this.getContext());
         /*Toast.makeText(getContext(),"GatWay IP:" +wAddr.getGatewayIPAddress()+"\n"+"GatWay MAC: "+wAddr.getGatWayMacAddress()+"\n"+"Device IP: "+wAddr.getDeviceIPAddress()+"\n"+"Device MAC: "+wAddr.getDeviceMacAddress(),

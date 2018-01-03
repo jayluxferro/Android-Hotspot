@@ -70,8 +70,15 @@ public class Config extends Fragment {
         updateConfigBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newSsid = ssid.getText().toString();
-                String newPassword = password.getText().toString();
+                String newSsid = ssid.getText().toString().trim();
+                String newPassword = password.getText().toString().trim();
+                if(newSsid.length() < 6 || newPassword.length() < 8){
+                    Toast.makeText(view.getContext(), "Invalid Configuration", Toast.LENGTH_LONG)
+                            .show();
+                    return;
+                }//end of validation
+
+
                 if(db.updateConfiguration(newSsid, newPassword)){
                     Toast.makeText(view.getContext(), "Configuration updated", Toast.LENGTH_LONG).show();
                     loadConfig(inflater, container, savedInstanceState);

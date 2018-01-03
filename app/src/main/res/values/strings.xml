@@ -4,12 +4,14 @@
     <string name="main">Main</string>
     <string name="clients">Clients</string>
     <string name="config">Configuration</string>
-    <string name="prompt_ssid">SSID</string>
-    <string name="prompt_password">Password</string>
+    <string name="prompt_ssid">SSID (At least 6 characters)</string>
+    <string name="prompt_password">Password (At least 8 characters)</string>
     <string name="action_password_short">Short Password</string>
     <string name="update_config">Update Configuration</string>
     <string name="show_password">Show Password</string>
     <string name="start_hotspot">Start Hotspot</string>
     <string name="stop_hotspot">Stop Hotspot</string>
     <string name="status">Hotspot Status!</string>
+    <string name="ssid_length">Enter SSID of at least 6 characters.</string>
+    <string name="password_length">Enter Password of at least 8 characters.</string>
 </resources>
